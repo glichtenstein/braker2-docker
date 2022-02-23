@@ -1,7 +1,7 @@
 # braker2-docker
 Docker container for running braker2 gene finder 
 
-# Inspired by https://github.com/blaxterlab/braker-docker
+# Adapted from https://github.com/blaxterlab/braker-docker
 
 To use this docker you should:
 
