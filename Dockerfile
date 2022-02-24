@@ -8,10 +8,10 @@ LABEL maintainer "gabriel.lichtenstein@gmail.com"
 ENV DEBIAN_FRONTEND noninteractive
 ENV TZ=Asia/Israel
 
-# Enable this ENVs if running from within Weizamnn Institute's AWS from WEXAC
-#ENV https_proxy=http://10.150.50.52:8080
-#ENV http_proxy=http://10.150.50.52:8080
-#ENV NO_PROXY=169.254.169.254,.s3.eu-west-1.amazonaws.com,.ec2.eu-west-1.amazonaws.com,.ecs.eu-west-1.amazonaws.com,.ecs-agent.amazonaws.com,.ecr.eu-west-1.amazonaws.com,.ec2messages.eu-west-1.amazonaws.com,.cloudformation.eu-west-1.amazonaws.com,.ssm.eu-west-1.amazonaws.com,.ssmmessages.eu-west-1.amazonaws.com
+# Enable this ENVs if running from within Weizamnn Institute's AWS
+ENV https_proxy=http://10.150.50.52:8080
+ENV http_proxy=http://10.150.50.52:8080
+ENV NO_PROXY=169.254.169.254,.s3.eu-west-1.amazonaws.com,.ec2.eu-west-1.amazonaws.com,.ecs.eu-west-1.amazonaws.com,.ecs-agent.amazonaws.com,.ecr.eu-west-1.amazonaws.com,.ec2messages.eu-west-1.amazonaws.com,.cloudformation.eu-west-1.amazonaws.com,.ssm.eu-west-1.amazonaws.com,.ssmmessages.eu-west-1.amazonaws.com
 
 RUN apt update && apt upgrade -y -q
 
@@ -31,14 +31,8 @@ RUN cpanm File::Spec::Functions Hash::Merge List::Util MCE::Mutex \
     Module::Load::Conditional Parallel::ForkManager POSIX Scalar::Util::Numeric \
     YAML Math::Utils File::HomeDir threads;
 
-# RUN apt install -y -q \
-#     software-properties-common \
-#     libboost-iostreams-dev libboost-system-dev libboost-filesystem-dev \
-#     zlibc gcc-multilib apt-utils zlib1g-dev python \
-#     cmake tcsh build-essential g++ git wget gzip perl cpanminus
-
 ####################################################################################
-# Get GeneMark-ES/ET/EP 
+# Get GeneMark-ES/ET/EP
 ####################################################################################
 # Manually download GenMark ES Software and Licence from:
 # http://topaz.gatech.edu/GeneMark/license_download.cgi
@@ -144,6 +138,7 @@ RUN make install
 # Set PATH
 ENV PATH="/Augustus/bin:/Augustus/scripts:${PATH}"
 ENV AUGUSTUS_CONFIG_PATH /Augustus/config/
+RUN chmod 0777 -Rfv /Augustus/config
 # Test AUGUSTUS
 RUN make unit_test
 ### END
@@ -151,10 +146,10 @@ RUN make unit_test
 ####################################################################################
 # DOCKERUSER
 ####################################################################################
-RUN adduser --disabled-password --gecos '' dockeruser
+RUN adduser --disabled-password --gecos '' ec2-user
 RUN mkdir /data
-RUN chown -R dockeruser /data
-USER dockeruser
+RUN chown -R ec2-user /data
+USER ec2-user
 WORKDIR /data
 
 ####################################################################################
