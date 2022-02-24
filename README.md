@@ -21,8 +21,10 @@ docker build -t braker2 .
 docker run --rm \
   -u $UID:$GROUPS \
   -v `pwd`:/data \
-  braker \
+  braker2 \
   braker.pl --species=YOURSPECIESNAME --UTR=on --cores=8 \
   --genome=/data/genome.fasta \
   --bam=/data/aligned.bam
 ```
+
+I added a testing_braker2.sh bash script to the repo to use as a template
