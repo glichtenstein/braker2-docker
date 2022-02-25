@@ -22,7 +22,7 @@ RUN apt install -y -q \
     git cmake cpanminus build-essential autoconf automake make gcc perl python \
     zlib1g-dev libbz2-dev liblzma-dev libcurl4-gnutls-dev libssl-dev libncurses5-dev \
     libboost-iostreams-dev libboost-system-dev libboost-filesystem-dev \
-    wget gzip
+    wget gzip apt-utils
 
 ####################################################################################
 # Install required Perl CPAN modules
