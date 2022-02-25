@@ -63,7 +63,8 @@ RUN apt-get install bamtools -y -q
 # DIAMOND
 ####################################################################################
 RUN wget http://github.com/bbuchfink/diamond/releases/download/v0.9.24/diamond-linux64.tar.gz
-RUN tar -xzvf diamond-linux64.tar.gz
+RUN mkdir diamond-linux64
+RUN tar -xzvf diamond-linux64.tar.gz -C /diamond-linux64
 # Set PATH
 ENV DIAMOND_PATH /diamond-linux64
 
